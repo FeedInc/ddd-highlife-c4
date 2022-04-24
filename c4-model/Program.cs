@@ -26,6 +26,7 @@ namespace c4_model
             ViewSet viewSet = workspace.Views;
             Model model = workspace.Model;
             
+            //1.Context Diagram
             //Software System
             SoftwareSystem highLife = model.AddSoftwareSystem("HighLife","HighLife is a web application for people who likes videogames and want to teach or be coached");
             SoftwareSystem openDota = model.AddSoftwareSystem("OpenDota","OpenDota API Provides Dota 2 related data including advanced match data extracted from match replays");
@@ -70,8 +71,7 @@ namespace c4_model
             trackerGG.AddTags("TrackerGG");
             googleCalendar.AddTags("Google Calendar");
             FirebaseChat.AddTags("Firebase Chat");
-            // aircraftSystem.AddTags("AircraftSystem");
-    
+
             //Styles
             Styles styles = viewSet.Configuration.Styles;
             //Styles for Persons
@@ -88,11 +88,70 @@ namespace c4_model
             styles.Add(new ElementStyle("TrackerGG") { Background = "#A5243D", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Google Calendar") { Background = "#A5243D", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Firebase Chat") { Background = "#A5243D", Color = "#ffffff", Shape = Shape.RoundedBox });
+            
+            //2.Containers Diagram
+            Container landingPage = highLife.AddContainer("Landing Page", "Page with information about us and our app.", "HTML, CSS and JS");
+            Container webApplication = highLife.AddContainer("Web Application", "Delivers static content and SPA", "Java Spring MVC");
+            Container singlePageApplication = highLife.AddContainer("Single Page Application", "Coaching and tournament front-end application", "Angular");
+            Container apiRest = highLife.AddContainer("API Rest", "Reads data from Database and delivery it in .JSON", "Java Spring MVC");
+            Container dataBase = highLife.AddContainer("Database", "Stores user registration information, hashed authentification credentials, access log, etc", "Relational Database Schema MySQL");
+            Container highLifeContext = highLife.AddContainer("High Life Context","HighLife Bounded Context","Java Spring MVC");
+            Container gamerDataManagerContext = highLife.AddContainer("Gamer Data Manager Context", "Bounded Context from coach and students", "Java Spring MVC");
+            Container chatContext = highLife.AddContainer("Chat Context","Bounded Context for messaging or chating between users","Java Spring MVC");
+            Container tournamentContext = highLife.AddContainer("Tournament Context","Bounded Context for gaming house owners and tournaments or events","Java Spring MVC");
+            
+            //Uses
+            //Uses for person
+            //Landing page object
+            coach.Uses(landingPage,"See information about our application, help and other stuff");
+            cafeBoss.Uses(landingPage,"See information about our application, help and other stuff");
+            student.Uses(landingPage,"See information about our application, help and other stuff");
+            //Web Application page object
+            coach.Uses(webApplication,"Use it in order to upload coaching rutines and got a job as a coach");
+            cafeBoss.Uses(webApplication,"Invite people to his events");
+            student.Uses(webApplication,"See tournaments and event, but, mainly, be guided by really good coaches in his favorite games");
+            //Single Page Application object
+            coach.Uses(singlePageApplication,"See information about our application, help and other stuff");
+            cafeBoss.Uses(singlePageApplication,"See information about our application, help and other stuff");
+            student.Uses(singlePageApplication,"See information about our application, help and other stuff");
+            
+            //Uses for containers
+            singlePageApplication.Uses(apiRest, "Use it for catching data and use it with functionality");
 
+            landingPage.Uses(webApplication, "Redirect to the application");
+            
+            apiRest.Uses(gamerDataManagerContext, "Use it in order to get Dota 2 players data");
+            
+            apiRest.Uses(dataBase, "Reads database and return data in .JSON format");
+            
+            webApplication.Uses(singlePageApplication, "Delivers to the customer's web browser");
+            
+            //Add tags
+            landingPage.AddTags("Landing Page");
+            webApplication.AddTags("Web Application");
+            singlePageApplication.AddTags("Single Page Application");
+            apiRest.AddTags("Api Rest");
+            dataBase.AddTags("Database");
+            
+            //Styles
+            styles.Add(new ElementStyle("Landing Page") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.WebBrowser });
+            styles.Add(new ElementStyle("Web Application") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.WebBrowser });
+            styles.Add(new ElementStyle("Single Page Application") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.WebBrowser });
+            styles.Add(new ElementStyle("Api Rest") { Background = "#0F8B8D", Color = "#ffffff", Shape = Shape.RoundedBox });
+            styles.Add(new ElementStyle("Database") { Background = "#143642", Color = "#ffffff", Shape = Shape.Cylinder });
 
+            ContainerView containerView = viewSet.CreateContainerView(highLife, "Container", "Container Diagram");
+            containerView.PaperSize = PaperSize.A4_Landscape;
+            containerView.AddAllElements();
+            
             //Drawing
             structurizrClient.UnlockWorkspace(workspaceId);
             structurizrClient.PutWorkspace(workspaceId, workspace);
+            
+            
+            //3. Components Diagram
+            Component signInController = 
+
         }
     }
 }

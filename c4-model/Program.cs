@@ -34,7 +34,7 @@ namespace c4_model
             SoftwareSystem developerToornament = model.AddSoftwareSystem("DeveloperToornament", "Developer Toornament provides Rocket League data (matches, players, items)");
             SoftwareSystem trackerGG = model.AddSoftwareSystem("TrackerGG", "Tracker GG provides CSGO data (matches, players, items)");
             SoftwareSystem googleCalendar = model.AddSoftwareSystem("Google Calendar", "Calendar provided by Google to set important dates");
-            SoftwareSystem FirebaseChat = model.AddSoftwareSystem("Firebase Chat", "Chat provided by Google Firebase. Just a simple chat.");
+            SoftwareSystem firebaseChat = model.AddSoftwareSystem("Firebase Chat", "Chat provided by Google Firebase. Just a simple chat.");
             
             //Persons
             Person coach = model.AddPerson("Coach", "The one in charge to teach beginners or not too talented gamers to improve their skills in-game");
@@ -54,7 +54,7 @@ namespace c4_model
             highLife.Uses(developerToornament, "Use it in order to get Rocket League players data");
             highLife.Uses(trackerGG, "Use it in order to get CS-GO players data");
             highLife.Uses(googleCalendar, "Use it in order to set Dates for important gaming events");
-            highLife.Uses(FirebaseChat, "Use it in order to chat with Coach and other players");
+            highLife.Uses(firebaseChat, "Use it in order to chat with Coach and other players");
             
             SystemContextView contextView = viewSet.CreateSystemContextView(highLife, "Context", "Context Diagram");
             contextView.PaperSize = PaperSize.A4_Landscape;
@@ -70,7 +70,7 @@ namespace c4_model
             developerToornament.AddTags("Developer Toornament");
             trackerGG.AddTags("TrackerGG");
             googleCalendar.AddTags("Google Calendar");
-            FirebaseChat.AddTags("Firebase Chat");
+            firebaseChat.AddTags("Firebase Chat");
 
             //Styles
             Styles styles = viewSet.Configuration.Styles;
@@ -91,14 +91,13 @@ namespace c4_model
             
             //2.Containers Diagram
             Container landingPage = highLife.AddContainer("Landing Page", "Page with information about us and our app.", "HTML, CSS and JS");
-            Container webApplication = highLife.AddContainer("Web Application", "Delivers static content and SPA", "Java Spring MVC");
+            Container webApplication = highLife.AddContainer("Web Application", "Delivers static content and SPA", "Java Spring Boot");
             Container singlePageApplication = highLife.AddContainer("Single Page Application", "Coaching and tournament front-end application", "Angular");
-            Container apiRest = highLife.AddContainer("API Rest", "Reads data from Database and delivery it in .JSON", "Java Spring MVC");
+            Container apiRest = highLife.AddContainer("API Rest", "Reads data from Database and delivery it in .JSON", "Java Spring Boot");
             Container dataBase = highLife.AddContainer("Database", "Stores user registration information, hashed authentification credentials, access log, etc", "Relational Database Schema MySQL");
-            Container highLifeContext = highLife.AddContainer("High Life Context","HighLife Bounded Context","Java Spring MVC");
-            Container gamerDataManagerContext = highLife.AddContainer("Gamer Data Manager Context", "Bounded Context from coach and students", "Java Spring MVC");
-            Container chatContext = highLife.AddContainer("Chat Context","Bounded Context for messaging or chating between users","Java Spring MVC");
-            Container tournamentContext = highLife.AddContainer("Tournament Context","Bounded Context for gaming house owners and tournaments or events","Java Spring MVC");
+            Container highLifeContext = highLife.AddContainer("High Life Context","HighLife Bounded Context","Java Spring Boot");
+            Container chatContext = highLife.AddContainer("Chat Context","Bounded Context for messaging or chating between users","Java Spring Boot");
+            Container tournamentContext = highLife.AddContainer("Tournament Context","Bounded Context for gaming house owners and tournaments or events","Java Spring Boot");
             
             //Uses
             //Uses for person
@@ -119,11 +118,22 @@ namespace c4_model
             singlePageApplication.Uses(apiRest, "Use it for catching data and use it with functionality");
 
             landingPage.Uses(webApplication, "Redirect to the application");
+
+            apiRest.Uses(highLifeContext, "Use it in order to manage all High Life functions");
+            apiRest.Uses(chatContext, "Use it in order to manage chat and messaging");
+            apiRest.Uses(tournamentContext, "Use it in order to manage tournaments");
             
-            apiRest.Uses(gamerDataManagerContext, "Use it in order to get Dota 2 players data");
-            
-            apiRest.Uses(dataBase, "Reads database and return data in .JSON format");
-            
+            highLifeContext.Uses(dataBase, "Reads database and return data in .JSON format");
+            chatContext.Uses(dataBase, "Reads database and return data in .JSON format");
+            tournamentContext.Uses(dataBase, "Reads database and return data in .JSON format");
+
+            chatContext.Uses(firebaseChat, "Get functionality");
+            highLifeContext.Uses(openDota, "Get functionality");
+            highLifeContext.Uses(developerRiot, "Get functionality");
+            highLifeContext.Uses(developerToornament, "Get functionality");
+            highLifeContext.Uses(trackerGG, "Get functionality");
+            tournamentContext.Uses(googleCalendar, "Reads database and return data in .JSON format");
+
             webApplication.Uses(singlePageApplication, "Delivers to the customer's web browser");
             
             //Add tags
@@ -132,25 +142,194 @@ namespace c4_model
             singlePageApplication.AddTags("Single Page Application");
             apiRest.AddTags("Api Rest");
             dataBase.AddTags("Database");
+            highLifeContext.AddTags("High Life Context");
+            chatContext.AddTags("Chat Context");
+            tournamentContext.AddTags("Tournament Context");
             
             //Styles
             styles.Add(new ElementStyle("Landing Page") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.WebBrowser });
-            styles.Add(new ElementStyle("Web Application") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.WebBrowser });
+            styles.Add(new ElementStyle("Web Application") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Single Page Application") { Background = "#2B3A67", Color = "#ffffff", Shape = Shape.WebBrowser });
             styles.Add(new ElementStyle("Api Rest") { Background = "#0F8B8D", Color = "#ffffff", Shape = Shape.RoundedBox });
             styles.Add(new ElementStyle("Database") { Background = "#143642", Color = "#ffffff", Shape = Shape.Cylinder });
+            styles.Add(new ElementStyle("High Life Context") { Background = "#F2545B", Color = "#000000", Shape = Shape.Hexagon });
+            styles.Add(new ElementStyle("Gamer Data Manager Context") { Background = "#F2545B", Color = "#000000", Shape = Shape.Hexagon });
+            styles.Add(new ElementStyle("Chat Context") { Background = "#F2545B", Color = "#000000", Shape = Shape.Hexagon });
+            styles.Add(new ElementStyle("Tournament Context") { Background = "#F2545B", Color = "#000000", Shape = Shape.Hexagon });
 
             ContainerView containerView = viewSet.CreateContainerView(highLife, "Container", "Container Diagram");
             containerView.PaperSize = PaperSize.A4_Landscape;
             containerView.AddAllElements();
             
+            
+            //3. Components Diagram
+            // Component HighLife
+            Component signInController = highLifeContext.AddComponent("Sign-in controller", "","Java Spring Boot");
+            Component resetPasswordController = highLifeContext.AddComponent("Restart Password Controller", "", "Java Spring Boot");
+            Component signUpController = highLifeContext.AddComponent("Sign-up Controller", "", "Java Spring Boot");
+            Component matchingCoachesController = highLifeContext.AddComponent("Find Matching Coaches Controller", "", "Java Spring Boot");
+            Component matchingStudentsController = highLifeContext.AddComponent("Find Matching Students Controller", "", "Java Spring Boot");
+            Component dataController = highLifeContext.AddComponent("DataController", "", "Java Spring Boot");
+            Component accountsController = highLifeContext.AddComponent("Account controller", "", "Java Spring Boot");
+            Component subAccountsController = highLifeContext.AddComponent("Subaccount controller", "", "Java Spring Boot");
+            // Component findMatchingCoachesController = highLifeContext.AddComponent("Find Matching Coaches Controller", "", "Java Spring Boot");
+
+            signUpController.Uses(dataController, "");
+            signUpController.Uses(signInController, "");
+            signUpController.Uses(resetPasswordController, "");
+
+            resetPasswordController.Uses(dataController, "");
+            
+            signInController.Uses(dataController, "");
+
+            matchingCoachesController.Uses(dataController, "");
+            matchingStudentsController.Uses(dataController, "");
+
+            accountsController.Uses(subAccountsController, "");
+            accountsController.Uses(dataBase, "");
+            
+            subAccountsController.Uses(dataController, "");
+
+            dataController.Uses(developerToornament, "");
+            dataController.Uses(developerRiot, "");
+            dataController.Uses(trackerGG, "");
+            dataController.Uses(openDota, "");
+
+            dataController.Uses(dataBase, "");
+
+            apiRest.Uses(dataController, "");
+
+            webApplication.Uses(apiRest, "");
+
+            //Add tags
+            signInController.AddTags("SignInController");
+            resetPasswordController.AddTags("ResetPasswordController");
+            signUpController.AddTags("SignUpController");
+            matchingCoachesController.AddTags("MatchingCoachesController");
+            matchingStudentsController.AddTags("MatchingStudentsController");
+            dataController.AddTags("DataController");
+            accountsController.AddTags("AccountsController");
+            subAccountsController.AddTags("SubaccountsController");
+            
+            
+            //Styles
+            styles.Add(new ElementStyle("SignInController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("ResetPasswordController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("SignUpController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("MatchingCoachesController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("MatchingStudentsController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("DataController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("AccountsController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("SubaccountsController") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            
+
+            
+            ComponentView highLifecomponentsView = viewSet.CreateComponentView(highLifeContext, "High Life Components", "High Life Component Diagram");
+            highLifecomponentsView.PaperSize = PaperSize.A4_Landscape;
+            
+            highLifecomponentsView.Add(webApplication);
+            highLifecomponentsView.Add(apiRest);
+            highLifecomponentsView.Add(dataBase);
+            highLifecomponentsView.Add(openDota);
+            highLifecomponentsView.Add(trackerGG);
+            highLifecomponentsView.Add(developerToornament);
+            highLifecomponentsView.Add(developerRiot);
+
+            highLifecomponentsView.AddAllComponents();
+            
+            //Component Tournament
+            Component tournamentController = tournamentContext.AddComponent("Tournament Controller", "","Java Spring Boot");
+            Component dateTournamentController = tournamentContext.AddComponent("Date Tournament Controller", "","Java Spring Boot");
+            Component leagueTournamentController = tournamentContext.AddComponent("League Tournament Controller", "","Java Spring Boot");
+            // Component findMatchingCoachesController = highLifeContext.AddComponent("Find Matching Coaches Controller", "", "Java Spring Boot");
+
+            tournamentController.Uses(leagueTournamentController, "");
+            tournamentController.Uses(dateTournamentController, "");
+            dateTournamentController.Uses(googleCalendar, "");
+            leagueTournamentController.Uses(dataBase, "");
+            
+            apiRest.Uses(tournamentController, "");
+
+            // Component s = highLifeContext.AddComponent("Sign-in controller", "","Java Spring Boot");
+            // Component a = highLifeContext.AddComponent("Restart Password Controller", "", "Java Spring Boot");
+            // Component f = highLifeContext.AddComponent("Sign-up Controller", "", "Java Spring Boot");
+            
+            //Add tags
+            tournamentController.AddTags("Tournament Controller");
+            dateTournamentController.AddTags("Date Tournament Controller");
+            leagueTournamentController.AddTags("League Tournament Controller");
+
+
+            //Styles
+            styles.Add(new ElementStyle("Tournament Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("Date Tournament Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("League Tournament Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+
+
+            ComponentView tournamentComponentsView = viewSet.CreateComponentView(tournamentContext, "Tournament Components", "High Life Component Diagram");
+            tournamentComponentsView.PaperSize = PaperSize.A4_Landscape;
+            
+            tournamentComponentsView.Add(webApplication);
+            tournamentComponentsView.Add(apiRest);
+            tournamentComponentsView.Add(dataBase);
+            tournamentComponentsView.Add(googleCalendar);
+            // tournamentComponentView.Add(openDota);
+            // tournamentComponentView.Add(trackerGG);
+            // tournamentComponentView.Add(developerToornament);
+            // tournamentComponentView.Add(developerRiot);
+
+            tournamentComponentsView.AddAllComponents();
+            
+            //Chat Component
+            Component chatController = tournamentContext.AddComponent("Chat Controller", "","Java Spring Boot");
+            Component messageController = tournamentContext.AddComponent("Message Controller", "", "");
+            Component inboxController = tournamentContext.AddComponent("Inbox Controller","", "");
+            Component multimediaController = tournamentContext.AddComponent("Multimedia Controller","", "");
+            
+            // Component findMatchingCoachesController = highLifeContext.AddComponent("Find Matching Coaches Controller", "", "Java Spring Boot");
+
+            chatController.Uses(dataBase, "");
+            chatController.Uses(firebaseChat, "");
+            inboxController.Uses(chatController, "");
+            chatController.Uses(multimediaController, "");
+            chatController.Uses(messageController, "");
+
+            // Component s = highLifeContext.AddComponent("Sign-in controller", "","Java Spring Boot");
+            // Component a = highLifeContext.AddComponent("Restart Password Controller", "", "Java Spring Boot");
+            // Component f = highLifeContext.AddComponent("Sign-up Controller", "", "Java Spring Boot");
+            
+            //Add tags
+            chatController.AddTags("Chat Controller");
+            inboxController.AddTags("Inbox Controller");
+            multimediaController.AddTags("Multimedia Controller");
+            messageController.AddTags("Message Controller");
+
+            apiRest.Uses(chatController, "");
+
+
+            //Styles
+            styles.Add(new ElementStyle("Chat Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("Inbox Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("Multimedia Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+            styles.Add(new ElementStyle("Message Controller") { Shape = Shape.Component, Background = "#facc2e", Icon = "" });
+
+
+            ComponentView chatComponentsView = viewSet.CreateComponentView(tournamentContext, "Chat Components View", "High Life Component Diagram");
+            chatComponentsView.PaperSize = PaperSize.A4_Landscape;
+            
+            chatComponentsView.Add(webApplication);
+            chatComponentsView.Add(apiRest);
+            chatComponentsView.Add(dataBase);
+            chatComponentsView.Add(firebaseChat);
+
+            chatComponentsView.AddAllComponents();
+            
             //Drawing
             structurizrClient.UnlockWorkspace(workspaceId);
             structurizrClient.PutWorkspace(workspaceId, workspace);
-            
-            
-            //3. Components Diagram
-            Component signInController = 
+
+
+
 
         }
     }

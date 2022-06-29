@@ -1,0 +1,278 @@
+{
+  "users": [
+    {
+      "firstName": "jhon",
+      "lastName": "Doe",
+      "nickName": "Arteezy",
+      "email": "jhonl@gmail.com",
+      "password": "12345678",
+      "urlToImage": "https://th.bing.com/th/id/R.349931f880c221365feb145640f4a743?rik=TN2WaHSg9e9dBQ&riu=http%3a%2f%2fwww.gamersdecide.com%2fsites%2fdefault%2ffiles%2fcontent-images%2fnews%2f2017%2f08%2f15%2farteezy-says-win-or-lose-he-will-continue-play-dota-2%2farteezy.jpg&ehk=SktNGtxZSyjKMw%2bUPEC4w5cYU1p94BnA0ZzE%2bp32gzc%3d&risl=&pid=ImgRaw&r=0",
+      "id": "C1UtvXZ",
+      "name": {
+        "title": "Mr",
+        "first": "Arteezy",
+        "last": ""
+      },
+
+      "medals": [
+        {
+          "game": "dota2",
+          "medal": "divine-5"
+        },
+        {
+          "game": "lol",
+          "medal": "bronce-3"
+        }
+      ],
+      "games": [
+        "lol",
+        "dota2"
+      ],
+      "biography": "Just to ez for rtz",
+      "location": {
+        "city": "",
+        "state": "",
+        "country": "Canada"
+      },
+
+      "picture": {
+        "large": "https://th.bing.com/th/id/R.349931f880c221365feb145640f4a743?rik=TN2WaHSg9e9dBQ&riu=http%3a%2f%2fwww.gamersdecide.com%2fsites%2fdefault%2ffiles%2fcontent-images%2fnews%2f2017%2f08%2f15%2farteezy-says-win-or-lose-he-will-continue-play-dota-2%2farteezy.jpg&ehk=SktNGtxZSyjKMw%2bUPEC4w5cYU1p94BnA0ZzE%2bp32gzc%3d&risl=&pid=ImgRaw&r=0"
+      },
+      "stats": [
+        {
+          "gameId": "dota2",
+          "data": [
+            100,
+            100,
+            50,
+            80,
+            70
+          ]
+        },
+        {
+          "gameId": "lol",
+          "data": [
+            70,
+            35,
+            42,
+            19,
+            42,
+            90,
+            28,
+            90
+          ]
+        }
+      ]
+
+    },
+    {
+      "id": "LuisPrado",
+      "type": "padawan",
+      "nickName": "Luis",
+      "urlToImage": "https://pps.whatsapp.net/v/t61.24694-24/290612494_315531927342028_8215600647302755062_n.jpg?ccb=11-4&oh=15fd2900cdb2f7abdd8115ff6e8bcb1b&oe=62CC3335",
+      "name": {
+        "title": "Mr",
+        "first": "Luis",
+        "last": "Prado"
+      },
+      "medals": [
+        {
+          "game": "dota2",
+          "medal": "legend-1"
+        },
+        {
+          "game": "lol",
+          "medal": "bronce-3"
+        }
+      ],
+      "games": [
+        "lol",
+        "dota2"
+      ],
+      "biography": "Me gusta jugar con mis amigos, y bajar la pepian en el juego DOTA2",
+      "location": {
+        "street": {
+          "number": 7993,
+          "name": "Luis Prado"
+        },
+        "city": "Lima",
+        "state": "San borja",
+        "country": "Peru"
+      },
+      "email": "khyn.nkwnzr@example.com",
+      "picture": {
+        "large": "https://pps.whatsapp.net/v/t61.24694-24/290612494_315531927342028_8215600647302755062_n.jpg?ccb=11-4&oh=15fd2900cdb2f7abdd8115ff6e8bcb1b&oe=62CC3335"
+      },
+      "stats": [
+        {
+          "gameId": "dota2",
+          "data": [
+            20,
+            30,
+            40,
+            10,
+            20
+          ]
+        },
+        {
+          "gameId": "lol",
+          "data": [
+            70,
+            35,
+            42,
+            19,
+            42,
+            90,
+            28,
+            90
+          ]
+        }
+      ]
+    },
+    {
+      "firstName": "fernando",
+      "lastName": "garay",
+      "nickName": "FernadoGaa",
+      "email": "adrex@hotmail.es",
+      "id": "ABi63Da",
+      "urlToImage": "https://i.ibb.co/yBGyfJP/92875569-343314529957629-2770467245535526912-n.jpg",
+      "name": {
+        "title": "Mr",
+        "first": "Fernando",
+        "last": "Gaaa"
+      },
+
+      "medals": [
+        {
+          "game": "dota2",
+          "medal": "crusader-4"
+        }
+      ],
+      "games": [
+        "lol",
+        "dota2"
+      ],
+      "biography": "Tambien me gusta jugar dota2 con mis amigos, en mis tiempos libres y bajar pepian",
+      "location": {
+        "city": "Lima",
+        "state": "San borja",
+        "country": "Peru"
+      },
+
+      "picture": {
+        "large": "https://i.ibb.co/yBGyfJP/92875569-343314529957629-2770467245535526912-n.jpg"
+      },
+      "stats": [
+        {
+          "gameId": "dota2",
+          "data": [
+            100,
+            30,
+            30,
+            50,
+            40
+          ]
+        }
+      ]
+    }
+  ],
+  "games": [
+    {
+      "id": "dota2",
+      "name": "Dota 2",
+      "type": "moba",
+      "background": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//blog/bg_repeater.jpg",
+      "image": "https://i.ibb.co/mRZj8dX/dota2-landing-page-image-2x.webp",
+      "banner": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/blog/default_header.jpg",
+      "logo": "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/global/dota2_logo_horiz.png",
+      "statsLabels": [
+        "Fighting",
+        "Farming",
+        "Supporting",
+        "Pushing",
+        "Versatility"
+      ],
+      "medals": [
+
+        {
+          "name": "crusader-4",
+          "imageRank": "https://static.wikia.nocookie.net/dota2_gamepedia/images/8/87/SeasonalRank3-4.png"
+        },
+        {
+          "name": "crusader-5",
+          "imageRank": "https://static.wikia.nocookie.net/dota2_gamepedia/images/b/b1/SeasonalRank3-5.png"
+        },
+        {
+          "name": "legend-1",
+          "imageRank": "https://static.wikia.nocookie.net/dota2_gamepedia/images/7/79/SeasonalRank5-1.png"
+
+        },
+        {
+          "name": "divine-4",
+          "imageRank": "https://static.wikia.nocookie.net/dota2_gamepedia/images/1/13/SeasonalRank7-4.png"
+        },
+        {
+          "name": "divine-5",
+          "imageRank": "https://static.wikia.nocookie.net/dota2_gamepedia/images/3/33/SeasonalRank7-5.png"
+        }
+      ]
+    },
+    {
+      "id": "lol",
+      "name": "League Of Legends",
+      "type": "moba",
+      "image": "https://images.contentstack.io/v3/assets/blt0eb2a2986b796d29/blt5abbad4f1d1da663/602457cff4a7946af0338221/LOL_Key_Art_2021_318x428_RiotBar.jpg??format=pjpg&quality=85",
+      "banner": "https://www.leagueoflegends.com/static/htp_hero_06-26c3fefbba4fcb12fce710e22e3b7882.png",
+      "background": "https://www.leagueoflegends.com/static/base-3x-17b11ad755c37c6f9064ef950e31b409.png",
+      "logo": "https://logodownload.org/wp-content/uploads/2014/09/lol-league-of-Legends-logo-1.png",
+      "statsLabels": [
+        "Fighting",
+        "Farming",
+        "Vision",
+        "Agression",
+        "Survivability",
+        "Objectives",
+        "Consistency",
+        "Versatility"
+      ],
+      "medals": [
+        {
+          "name": "bronce-3",
+          "imageRank": "https://static.wikia.nocookie.net/leagueoflegends/images/8/81/Season_2019_-_Bronze_3.png"
+        }
+      ]
+    }
+  ],
+  "tournaments": [
+    {
+      "name": "Torneo 1",
+      "game": "dota2",
+      "gameType": "5 vs 5",
+      "date": "23/06/22",
+      "maxTeams": 16,
+      "address": "Europe",
+      "urlToImage": "https://esportsbureau.com/wp-content/uploads/2022/01/epic-esports-events-y-winline-gestionaran-la-dota-2-champions-league-season-7.jpeg",
+      "id": 1
+    },
+    {
+      "name": "Torneo 2",
+      "game": "dota2",
+      "gameType": "1 vs 1",
+      "date": "23/06/22",
+      "maxTeams": 10,
+      "address": "America",
+      "urlToImage": "https://esportsbureau.com/wp-content/uploads/2022/01/epic-esports-events-y-winline-gestionaran-la-dota-2-champions-league-season-7.jpeg",
+      "id": 2
+    },
+    {
+      "name": "Torneo 6",
+      "game": "dota2",
+      "gameType": "5 vs 5",
+      "date": "23/06/22",
+      "maxTeams": 16,
+      "address": "Europe",
+      "urlToImage": "https://esportsbureau.com/wp-content/uploads/2022/01/epic-esports-events-y-winline-gestionaran-la-dota-2-champions-league-season-7.jpeg",
+      "id": 6
+    }
+  ]
+}
